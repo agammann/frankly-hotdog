@@ -1,29 +1,25 @@
 # not hotdog release status
 
-## Release history
+Version 0.2.2 is approved and published in the OpenAI Plugins Directory with package name `not-hotdog`. The replacement listing was verified while logged out. It shows not hotdog, Entertainment, version 0.2.2, an Install plugin button, and the current website and policy links. The superseded package has been unpublished.
 
-not hotdog was submitted, approved, and published in the OpenAI Plugins Directory on September 13, 2026 UTC (September 12 Pacific time). The published listing was independently viewed while logged out and shows an Install plugin button, Entertainment category, version 0.2.0, the verified developer, and both workflow descriptions.
-
-[Official directory listing](https://chatgpt.com/plugins/plugins_6aa626290c748191b8e1b55ac99bf9d6)
+[Official directory listing](https://chatgpt.com/plugins/plugins_6aa62d11f8308191af4d7ab1aba34ec3)
 
 [Public website](https://not-hotdog.alx21.chatgpt.site)
 
-[Browser companion installation](https://not-hotdog.alx21.chatgpt.site/extension)
+[Companion extension](https://not-hotdog.alx21.chatgpt.site/extension)
 
-The skills only plugin uses the host assistant's image capabilities. The companion website and browser extension classify on device with bundled MobileNet weights. Installing the chat plugin does not install the extension. No publisher API key is required or used; normal host usage limits still apply.
-
-Version 0.2.1 changes the display name to `not hotdog` and updates visible branding. Stable package identifiers, repository paths, and website links remain compatible. Version 0.2.1 was approved and published in the OpenAI directory. The public listing displays not hotdog and provides an Install plugin button. The website and companion extension also use the new name.
+[Public repository](https://github.com/agammann/not-hotdog)
 
 ## Verification
 
-1. The public website, privacy policy, terms, extension instructions, and extension ZIP returned HTTP 200 without authentication. The downloaded extension matches the tested local ZIP byte for byte.
-2. The hosted health endpoint reports on_device inference and publisher_api false. The old classification API returns HTTP 410. No publisher API credentials are configured.
-3. Both sample photographs returned the expected HOTDOG and NOT HOTDOG verdicts using the real model locally and on the hosted website.
-4. Nine automated tests passed. GitHub build and tests passed for application commit 1d9e1d197ee4a10182f036eb3c775dae047b68fa in run 34738760254. Subsequent changes only update release documentation.
-5. Model downloads are verified against pinned SHA256 hashes. Weights total 1,902,176 bytes.
-6. The OpenAI skill scan showed Passed before submission. The publisher completed identity verification and authorized the final declarations.
+1. All current tracked source files and all release archives were checked for the previous product name, with zero matches.
+2. Public website, privacy, terms, extension instructions, health, and extension ZIP returned HTTP 200 without authentication. The downloaded ZIP matches the local release byte for byte.
+3. Nine automated tests pass. GitHub CI passed for application commit e89b45ae1093cec1389e3425e61df7e3373fc43a, run 34739155586. Later changes only update documentation.
+4. Website and extension inference run on device. The host chat plugin uses existing assistant capabilities and normal host limits. No publisher API key is used or configured.
+5. Both sample photographs passed real local and hosted model checks. The model weights total 1,902,176 bytes and are verified against pinned hashes.
 
-## Scope limitations
+## Limits
 
-Extension behavior tests use simulated Chrome APIs and a DOM. A real installed Chrome or Edge extension session has not yet been verified. The companion extension is distributed as an unpacked preview; there is no Chrome or Edge store listing. Two successful sample images do not establish general accuracy. This is entertainment, not a food safety or allergy tool.
+The browser extension is an unpacked preview. Its behavior tests use simulated Chrome APIs and a DOM; a real installed Chrome or Edge session has not been verified. Two sample images do not establish general accuracy. No browser store listing is claimed.
 
+Historical Git commits and retired platform records retain their original metadata. Current names, package identifiers, source files, URLs, directories, and downloads use not hotdog or not-hotdog.

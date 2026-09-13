@@ -1,5 +1,7 @@
 # not hotdog
 
+[Install the OpenAI plugin](https://chatgpt.com/plugins/plugins_6aa62d11f8308191af4d7ab1aba34ec3) · [Website](https://not-hotdog.alx21.chatgpt.site)
+
 Two ways to ask a very small question: hotdog or not hotdog?
 
 The OpenAI plugin uses the host assistant's existing image capabilities for an image shared in ChatGPT or Codex. The companion website and Chrome or Edge extension run MobileNet on the visitor's device. The extension adds opt in hover detection on regular webpages.
