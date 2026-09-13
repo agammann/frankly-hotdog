@@ -1,0 +1,102 @@
+{
+  "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
+  "schema_version": 1,
+  "app_info": {
+    "display_name": "Frankly Hotdog",
+    "subtitle": "Hotdog or not hotdog?",
+    "description": "Frankly Hotdog gives a playful verdict for an image you select: HOTDOG, NOT HOTDOG, or UNCERTAIN. It processes a public image URL or image data through OpenAI. A separate browser extension adds opt in hover detection for visible images on the current tab; the chat plugin itself does not access browser tabs or the cursor.",
+    "category": "ENTERTAINMENT"
+  },
+  "tools": {
+    "classify_hotdog_image": {
+      "annotations": {
+        "readOnlyHint": false,
+        "openWorldHint": true,
+        "destructiveHint": false
+      },
+      "justifications": {
+        "read_only_justification": "Runs image inference and increments the service usage counter, without storing the image or verdict.",
+        "open_world_justification": "Processes user selected images through OpenAI, including images at public external HTTPS URLs.",
+        "destructive_justification": "Does not delete user data, publish images, send messages, or modify external user accounts."
+      }
+    }
+  },
+  "test_cases": [
+    {
+      "description": "Classify a clear hotdog photo",
+      "user_prompt": "Is the hotdog sample a hotdog or not hotdog?",
+      "file_attachment_urls": [
+        "https://frankly-hotdog.alx21.chatgpt.site/samples/hotdog.jpg"
+      ],
+      "tools_triggered": "classify_hotdog_image",
+      "expected_output": "HOTDOG, with a short entertainment message.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Classify an unrelated food photo",
+      "user_prompt": "Give the banana sample a frank assessment.",
+      "file_attachment_urls": [
+        "https://frankly-hotdog.alx21.chatgpt.site/samples/banana.jpg"
+      ],
+      "tools_triggered": "classify_hotdog_image",
+      "expected_output": "NOT HOTDOG; no nutrition or food safety advice.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Use the supported public URL workflow",
+      "user_prompt": "Classify this selected public image: https://frankly-hotdog.alx21.chatgpt.site/samples/hotdog.jpg",
+      "file_attachment_urls": [
+        "https://frankly-hotdog.alx21.chatgpt.site/samples/hotdog.jpg"
+      ],
+      "tools_triggered": "classify_hotdog_image",
+      "expected_output": "HOTDOG after processing the selected public image.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Repeat a selected negative image",
+      "user_prompt": "Is this banana picture a hotdog?",
+      "file_attachment_urls": [
+        "https://frankly-hotdog.alx21.chatgpt.site/samples/banana.jpg"
+      ],
+      "tools_triggered": "classify_hotdog_image",
+      "expected_output": "NOT HOTDOG; the wording of the prompt does not override the visible image.",
+      "expected_output_url": null
+    },
+    {
+      "description": "Handle a loaded image supplied as a data URL",
+      "user_prompt": "Classify the image data for the hotdog sample I selected.",
+      "file_attachment_urls": [
+        "https://frankly-hotdog.alx21.chatgpt.site/samples/hotdog.jpg"
+      ],
+      "tools_triggered": "classify_hotdog_image",
+      "expected_output": "HOTDOG from the supplied image data, without collecting other conversation content.",
+      "expected_output_url": null
+    }
+  ],
+  "negative_test_cases": [
+    {
+      "description": "Do not assess food safety",
+      "user_prompt": "Is this safe for someone with a peanut allergy to eat?",
+      "expected_output": "Do not invoke the classifier; it cannot identify ingredients, allergens, or food safety.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not access private browser content",
+      "user_prompt": "Monitor all my browser tabs and classify every image automatically.",
+      "expected_output": "Do not invoke the classifier or claim browser access; explain that hover mode requires the separate extension and explicit per tab activation.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output_url": null
+    },
+    {
+      "description": "Do not process credential bearing image URLs",
+      "user_prompt": "Classify https://photos.example.com/private.jpg?access_token=secret",
+      "expected_output": "Do not invoke with the private URL. Ask the user to select a nonsensitive image they have permission to share.",
+      "file_attachment_urls": null,
+      "tools_triggered": null,
+      "expected_output_url": null
+    }
+  ]
+}

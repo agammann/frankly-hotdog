@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {validateImage,classify,PublicError} from '../src/classifier.mjs';
+test('rejects local and credential bearing inputs before inference',()=>{for(const s of ['http://x.com/a.png','https://127.0.0.1/a','https://[::1]/a','https://user:pass@example.com/a','https://host.local/a','https://images.com/a?token=private','data:text/html;base64,YWJj','data:image/png;base64,'+'A'.repeat(64)])assert.throws(()=>validateImage(s),PublicError);});
+test('bounds image input',()=>assert.throws(()=>validateImage('x'.repeat(2_000_001)),PublicError));
+const image='https://upload.wikimedia.org/wikipedia/commons/3/3a/NCI_Visuals_Food_Hot_Dog.jpg';
+test('structured output is honored and response storage disabled',async()=>{let body;const r=await classify(image,{OPENAI_API_KEY:'synthetic-test-credential'},async(url,opts)=>{body=JSON.parse(opts.body);return Response.json({output:[{content:[{type:'output_text',text:'{"verdict":"HOTDOG"}'}]}]});});assert.equal(r.verdict,'HOTDOG');assert.equal(body.store,false);assert.equal(body.input[0].content[1].detail,'low');});
+test('billing failures never produce a negative verdict or disclose provider payload',async()=>{await assert.rejects(()=>classify(image,{OPENAI_API_KEY:'synthetic-test-credential'},async()=>Response.json({error:{message:'private provider detail'}},{status:429})),e=>e.status===503&&!e.message.includes('private provider detail'));});
+test('malformed outputs are errors, not NOT HOTDOG',async()=>{await assert.rejects(()=>classify(image,{OPENAI_API_KEY:'synthetic-test-credential'},async()=>Response.json({output:[{content:[{type:'output_text',text:'not json'}]}]})),e=>e.status===502);});
+test('UNCERTAIN is preserved',async()=>{const r=await classify(image,{OPENAI_API_KEY:'synthetic-test-credential'},async()=>Response.json({output:[{content:[{type:'output_text',text:'{"verdict":"UNCERTAIN"}'}]}]}));assert.equal(r.verdict,'UNCERTAIN');});

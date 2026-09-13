@@ -1,0 +1,25 @@
+{
+  "name": "frankly-hotdog",
+  "version": "0.1.0",
+  "description": "Classify a selected image as hotdog or not hotdog for entertainment.",
+  "author": {
+    "name": "agammann",
+    "url": "https://github.com/agammann"
+  },
+  "skills": "./skills/",
+  "mcpServers": "./.mcp.json",
+  "interface": {
+    "displayName": "Frankly Hotdog",
+    "shortDescription": "Hotdog or not hotdog?",
+    "longDescription": "Get a frank assessment of a selected image: HOTDOG, NOT HOTDOG, or UNCERTAIN. For entertainment. Browser hover detection requires the separate Frankly Hotdog extension.",
+    "developerName": "agammann",
+    "category": "Entertainment",
+    "capabilities": ["Write"],
+    "websiteURL": "https://frankly-hotdog.alx21.chatgpt.site",
+    "privacyPolicyURL": "https://frankly-hotdog.alx21.chatgpt.site/privacy",
+    "termsOfServiceURL": "https://frankly-hotdog.alx21.chatgpt.site/terms",
+    "logo": "./assets/icon.png",
+    "composerIcon": "./assets/icon.png",
+    "defaultPrompt": ["Is this image a hotdog or not hotdog?", "Give this image a frank assessment."]
+  }
+}
