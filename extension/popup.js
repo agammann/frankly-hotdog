@@ -9,7 +9,7 @@ toggle.addEventListener('click',async()=>{
     const key='tab:'+tab.id,s=await chrome.storage.session.get(key),enabled=!s[key];
     if(enabled)await chrome.scripting.executeScript({target:{tabId:tab.id},files:['content.js']});
     await chrome.storage.session.set({[key]:enabled});
-    await chrome.tabs.sendMessage(tab.id,{type:'FRANKLY_SET_ENABLED',enabled});
+    await chrome.tabs.sendMessage(tab.id,{type:'NOT_HOTDOG_SET_ENABLED',enabled});
     status.textContent=enabled?'Enabled for this tab. Hover on an image for a moment. Press Escape to pause.':'Paused. No new images will be checked.';
     await read();
   }catch(e){status.textContent=e.message||'This page does not allow extensions.';}finally{toggle.disabled=false;}

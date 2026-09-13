@@ -6,7 +6,7 @@ The OpenAI plugin uses the host assistant's existing image capabilities for an i
 
 Neither workflow calls a publisher funded API. No API key is required. Normal ChatGPT or Codex plan limits still apply to the chat workflow. Browser checks use the visitor's device and local model files.
 
-Publisher and support: [agammann](https://github.com/agammann). [Report an issue](https://github.com/agammann/frankly-hotdog/issues).
+Publisher and support: [agammann](https://github.com/agammann). [Report an issue](https://github.com/agammann/not-hotdog/issues).
 
 ## Run and build
 
@@ -27,7 +27,7 @@ The original API endpoints return HTTP 410. Source contains no OpenAI API client
 
 ## Install the browser companion
 
-After building, extract `public/frankly-hotdog-extension.zip`. Open Chrome or Edge Extensions, enable Developer mode, choose Load unpacked, and select the extracted directory containing manifest.json. Open a regular webpage, click the extension icon, and enable it for that tab. Navigation resets activation; Escape pauses it.
+After building, extract `public/not-hotdog-extension.zip`. Open Chrome or Edge Extensions, enable Developer mode, choose Load unpacked, and select the extracted directory containing manifest.json. Open a regular webpage, click the extension icon, and enable it for that tab. Navigation resets activation; Escape pauses it.
 
 The extension bundles JavaScript and model weights and has no external host permissions. It handles visible top level HTML images. If direct canvas access is blocked, it locally crops an active tab capture to the hovered image. The full screenshot is never uploaded or returned to page scripts. CSS backgrounds, frames, video, browser settings pages, and offscreen images are outside this preview. Overlays can affect the crop.
 

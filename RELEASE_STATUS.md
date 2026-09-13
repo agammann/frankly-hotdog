@@ -2,13 +2,13 @@
 
 ## Release history
 
-Frankly Hotdog was submitted, approved, and published in the OpenAI Plugins Directory on September 13, 2026 UTC (September 12 Pacific time). The published listing was independently viewed while logged out and shows an Install plugin button, Entertainment category, version 0.2.0, the verified developer, and both workflow descriptions.
+not hotdog was submitted, approved, and published in the OpenAI Plugins Directory on September 13, 2026 UTC (September 12 Pacific time). The published listing was independently viewed while logged out and shows an Install plugin button, Entertainment category, version 0.2.0, the verified developer, and both workflow descriptions.
 
 [Official directory listing](https://chatgpt.com/plugins/plugins_6aa626290c748191b8e1b55ac99bf9d6)
 
-[Public website](https://frankly-hotdog.alx21.chatgpt.site)
+[Public website](https://not-hotdog.alx21.chatgpt.site)
 
-[Browser companion installation](https://frankly-hotdog.alx21.chatgpt.site/extension)
+[Browser companion installation](https://not-hotdog.alx21.chatgpt.site/extension)
 
 The skills only plugin uses the host assistant's image capabilities. The companion website and browser extension classify on device with bundled MobileNet weights. Installing the chat plugin does not install the extension. No publisher API key is required or used; normal host usage limits still apply.
 

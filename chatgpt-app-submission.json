@@ -13,7 +13,7 @@
       "description": "Clear hotdog photograph",
       "user_prompt": "Is this a hotdog or not hotdog?",
       "file_attachment_urls": [
-        "https://frankly-hotdog.alx21.chatgpt.site/samples/hotdog.jpg"
+        "https://not-hotdog.alx21.chatgpt.site/samples/hotdog.jpg"
       ],
       "tools_triggered": null,
       "expected_output": "Inspect the attached image using the host assistant. Return HOTDOG and at most one playful sentence.",
@@ -23,7 +23,7 @@
       "description": "Clear negative photograph",
       "user_prompt": "Hotdog or not hotdog?",
       "file_attachment_urls": [
-        "https://frankly-hotdog.alx21.chatgpt.site/samples/banana.jpg"
+        "https://not-hotdog.alx21.chatgpt.site/samples/banana.jpg"
       ],
       "tools_triggered": null,
       "expected_output": "Inspect the banana image. Return NOT HOTDOG.",

@@ -8,6 +8,6 @@ src/assets.generated.mjs
 public/model/
 public/device-worker.js
 public/app.js
-public/frankly-hotdog-extension.zip
+public/not-hotdog-extension.zip
 extension/model/
 extension/background.js

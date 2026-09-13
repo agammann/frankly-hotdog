@@ -1,6 +1,6 @@
 {
-  "name": "frankly-hotdog",
-  "version": "0.2.1",
+  "name": "not-hotdog",
+  "version": "0.2.2",
   "description": "Classify a selected image as hotdog or not hotdog for entertainment.",
   "author": {
     "name": "agammann",
@@ -13,9 +13,9 @@
     "longDescription": "Get a playful HOTDOG, NOT HOTDOG, or UNCERTAIN verdict for an image shared in ChatGPT or Codex, using the host assistant. A separate companion extension adds browser hover checks using a model on your device. No publisher API key is used. Installing the chat plugin does not install the extension. Normal host usage limits apply.",
     "developerName": "ALEXANDER GREGORY AMMANN",
     "category": "Entertainment",
-    "websiteURL": "https://frankly-hotdog.alx21.chatgpt.site",
-    "privacyPolicyURL": "https://frankly-hotdog.alx21.chatgpt.site/privacy",
-    "termsOfServiceURL": "https://frankly-hotdog.alx21.chatgpt.site/terms",
+    "websiteURL": "https://not-hotdog.alx21.chatgpt.site",
+    "privacyPolicyURL": "https://not-hotdog.alx21.chatgpt.site/privacy",
+    "termsOfServiceURL": "https://not-hotdog.alx21.chatgpt.site/terms",
     "logo": "./assets/logo512.png",
     "composerIcon": "./assets/icon.png",
     "defaultPrompt": [

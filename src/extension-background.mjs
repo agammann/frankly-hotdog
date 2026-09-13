@@ -5,8 +5,8 @@ chrome.tabs.onUpdated.addListener((id,change)=>{if(change.status==='loading')chr
 chrome.runtime.onMessage.addListener((message,sender,reply)=>{
   if(sender.id!==chrome.runtime.id||sender.tab?.id===undefined)return;
   const id=sender.tab.id;
-  if(message.type==='FRANKLY_PAUSE'){chrome.storage.session.remove('tab:'+id).then(()=>reply({ok:true}));return true;}
-  if(!['FRANKLY_CLASSIFY','FRANKLY_CAPTURE_CLASSIFY'].includes(message.type))return;
+  if(message.type==='NOT_HOTDOG_PAUSE'){chrome.storage.session.remove('tab:'+id).then(()=>reply({ok:true}));return true;}
+  if(!['NOT_HOTDOG_CLASSIFY','NOT_HOTDOG_CAPTURE_CLASSIFY'].includes(message.type))return;
   (async()=>{
     const s=await chrome.storage.session.get('tab:'+id);
     if(!s['tab:'+id])throw Error('Enable not hotdog on this tab first.');
@@ -14,7 +14,7 @@ chrome.runtime.onMessage.addListener((message,sender,reply)=>{
     active.add(id);
     try{
       let image=message.image;
-      if(message.type==='FRANKLY_CAPTURE_CLASSIFY'){
+      if(message.type==='NOT_HOTDOG_CAPTURE_CLASSIFY'){
         const tab=await chrome.tabs.get(id);if(!tab.active)throw Error('Keep this tab active to classify the image.');
         const r=message.rect;
         if(!r||!['x','y','width','height','viewportWidth','viewportHeight'].every(k=>Number.isFinite(r[k]))||r.x<0||r.y<0||r.width<16||r.height<16||r.viewportWidth>16000||r.viewportHeight>16000||r.x+r.width>r.viewportWidth||r.y+r.height>r.viewportHeight)throw Error('Scroll so the entire image is visible, then hover again.');
