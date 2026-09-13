@@ -2,9 +2,9 @@
   "$schema": "https://developers.openai.com/apps-sdk/schemas/chatgpt-app-submission.v1.json",
   "schema_version": 1,
   "app_info": {
-    "display_name": "Frankly Hotdog",
+    "display_name": "not hotdog",
     "subtitle": "Hotdog or not hotdog?",
-    "description": "Frankly Hotdog gives a playful HOTDOG, NOT HOTDOG, or UNCERTAIN verdict for an image shared in ChatGPT or Codex, using the host assistant. A separate companion website and browser extension classify images on the user's device and add opt in hover detection. No publisher API key is used. Installing the chat plugin does not install the extension.",
+    "description": "not hotdog gives a playful HOTDOG, NOT HOTDOG, or UNCERTAIN verdict for an image shared in ChatGPT or Codex, using the host assistant. A separate companion website and browser extension classify images on the user's device and add opt in hover detection. No publisher API key is used. Installing the chat plugin does not install the extension.",
     "category": "ENTERTAINMENT"
   },
   "tools": {},
@@ -47,7 +47,7 @@
     },
     {
       "description": "Uncertainty explanation",
-      "user_prompt": "What does UNCERTAIN mean in Frankly Hotdog?",
+      "user_prompt": "What does UNCERTAIN mean in not hotdog?",
       "file_attachment_urls": null,
       "tools_triggered": null,
       "expected_output": "Explain that the image or model evidence was ambiguous, and suggest a clear photo. Do not present an uncertain result as NOT HOTDOG.",

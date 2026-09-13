@@ -8,4 +8,4 @@ http.createServer(async(req,res)=>{
     const response=await worker.fetch(request,{...process.env,LOCAL_DEV:'1'});
     res.writeHead(response.status,Object.fromEntries(response.headers));res.end(Buffer.from(await response.arrayBuffer()));
   }catch{res.writeHead(500);res.end('Request failed');}
-}).listen(port,'127.0.0.1',()=>console.log(`Frankly Hotdog: http://127.0.0.1:${port}`));
+}).listen(port,'127.0.0.1',()=>console.log(`not hotdog: http://127.0.0.1:${port}`));

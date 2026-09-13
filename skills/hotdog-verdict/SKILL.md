@@ -1,6 +1,6 @@
 ---
 name: hotdog-verdict
-description: Use when the user asks for a playful hotdog or not hotdog verdict for an image they share, or asks how to enable the Frankly Hotdog browser hover companion. Do not use for nutrition, allergens, food safety, identifying people, or unrelated tasks.
+description: Use when the user asks for a playful hotdog or not hotdog verdict for an image they share, or asks how to enable the not hotdog browser hover companion. Do not use for nutrition, allergens, food safety, identifying people, or unrelated tasks.
 ---
 
 Inspect only an image the user explicitly shares or selects, using the host assistant's existing image understanding. This skill has no MCP server, external inference endpoint, publisher API key, paid API calls, or executable scripts. Never ask for an API key or send images to a separate service.

@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Frankly Hotdog",
-  "version": "0.2.0",
+  "name": "not hotdog",
+  "version": "0.2.1",
   "description": "Hotdog or not hotdog, checked on your device. Enable hover separately for each tab. No API key or image upload.",
   "permissions": [
     "activeTab",
@@ -10,7 +10,7 @@
   ],
   "action": {
     "default_popup": "popup.html",
-    "default_title": "Frankly Hotdog"
+    "default_title": "not hotdog"
   },
   "background": {
     "service_worker": "background.js",

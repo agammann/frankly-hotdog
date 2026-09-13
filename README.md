@@ -1,4 +1,4 @@
-# Frankly Hotdog
+# not hotdog
 
 Two ways to ask a very small question: hotdog or not hotdog?
 

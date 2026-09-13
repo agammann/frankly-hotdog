@@ -9,7 +9,7 @@ chrome.runtime.onMessage.addListener((message,sender,reply)=>{
   if(!['FRANKLY_CLASSIFY','FRANKLY_CAPTURE_CLASSIFY'].includes(message.type))return;
   (async()=>{
     const s=await chrome.storage.session.get('tab:'+id);
-    if(!s['tab:'+id])throw Error('Enable Frankly Hotdog on this tab first.');
+    if(!s['tab:'+id])throw Error('Enable not hotdog on this tab first.');
     if(active.has(id))throw Error('One image at a time. Try again in a moment.');
     active.add(id);
     try{

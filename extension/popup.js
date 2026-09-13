@@ -1,7 +1,7 @@
 const status=document.querySelector('#status'),toggle=document.querySelector('#toggle');
 let tab;
 async function read(){[tab]=await chrome.tabs.query({active:true,currentWindow:true});const s=await chrome.storage.session.get('tab:'+tab.id);toggle.textContent=s['tab:'+tab.id]?'Pause on this tab':'Enable on this tab';}
-read().catch(()=>status.textContent='Open a regular webpage to use Frankly Hotdog.');
+read().catch(()=>status.textContent='Open a regular webpage to use not hotdog.');
 toggle.addEventListener('click',async()=>{
   toggle.disabled=true;
   try{
