@@ -1,22 +1,18 @@
 # Frankly Hotdog release status
 
-## Preview scope
+## Current version
 
-The implementation is available as public source. Public deployment and OpenAI submission are pending. No approval or directory listing is claimed.
+Version 0.2.0 combines a skills only OpenAI plugin with a companion website and Chrome or Edge hover extension. The browser paths classify on device using bundled MobileNet weights. The chat plugin uses the host assistant. No publisher API key is required or used.
 
-The preview includes a website with image upload and opt in hover, a Chrome and Edge extension, a Responses API classifier, a Streamable HTTP MCP tool, an atomic daily service budget, policy pages, and draft submission materials.
+## Verified
 
-## Verification
+1. Both sample photographs returned the expected HOTDOG and NOT HOTDOG verdicts in the browser using the real local model.
+2. Nine automated tests pass, covering activation, dwell, cache, pause, capture bounds, local asset serving, disabled former API routes, plugin and extension permission boundaries, and uncertain or invalid model output.
+3. Model downloads are verified against pinned SHA256 hashes. The weights total 1,902,176 bytes.
+4. The earlier hosted prototype's API credential was removed and the change deployed successfully. Its paid inference is disabled.
 
-All 14 deterministic tests passed locally. Coverage includes input validation, provider errors and malformed output, uncertainty preservation, simulated extension activation and pause, capture rejection, HTTP policy routes, origin and request size bounds, MCP initialization and discovery, missing production database handling, and the atomic daily budget exercised against SQLite.
+The local browser result is real model inference. Extension behavior tests use simulated Chrome APIs and a DOM. A real installed Chrome or Edge extension session has not yet been verified. Two successful sample images do not establish general classification accuracy.
 
-Browser preview rendering and API error presentation were inspected. The deterministic tests use synthetic provider responses and simulated extension contexts. Successful live classification and an installed extension session have not been verified. These checks do not establish classification accuracy or complete production readiness.
+## Pending
 
-## Remaining release work
-
-1. Verify real positive and negative image classifications with a configured API project.
-2. Configure the hosting secret, apply the database migration, deploy, and verify the public HTTPS service and MCP endpoint.
-3. Test a real installed browser extension, including protected image capture, pause, and navigation behavior.
-4. Finalize the privacy policy against actual hosting practices, verify the publisher and domain, import the listing, scan the tools, and submit for OpenAI review.
-
-The intended origin is `https://frankly-hotdog.alx21.chatgpt.site`. Bundled extension and submission URLs target that future deployment and are not proof of a live service.
+The rebuilt website is awaiting final deployment and public access. OpenAI submission and review are pending. The companion extension is distributed as an unpacked preview; no browser store listing is claimed. The publisher has completed identity verification in the OpenAI portal.

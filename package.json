@@ -1,18 +1,19 @@
 {
   "name": "frankly-hotdog",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --env-file-if-exists=.env.local src/local.mjs",
-    "build": "node scripts/build.mjs",
-    "test": "node --test test/*.test.mjs",
-    "test:live": "node --env-file-if-exists=.env.local scripts/live-test.mjs"
+    "dev": "node src/local.mjs",
+    "build": "node scripts/model-assets.mjs && node scripts/build.mjs",
+    "test": "node --test test/*.test.mjs"
   },
   "dependencies": {
-    "@modelcontextprotocol/sdk": "1.30.0",
+    "@tensorflow/tfjs-backend-cpu": "4.22.0",
+    "@tensorflow/tfjs-core": "4.22.0",
+    "@tensorflow/tfjs-layers": "4.22.0",
     "esbuild": "0.28.2",
-    "zod": "4.6.2"
+    "fflate": "0.8.2"
   },
   "devDependencies": {
     "jsdom": "30.0.1"

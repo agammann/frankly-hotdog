@@ -16,7 +16,8 @@ test('hover does nothing before activation, runs after dwell, caches, and pauses
 test('background rejects disabled tabs and out of bounds screenshot crops without network calls',async()=>{
  let listener,fetches=0,captures=0,enabled=false;
  const ctx={Set,Number,Error,console,AbortSignal,chrome:{runtime:{id:'unit',onMessage:{addListener(fn){listener=fn;}}},tabs:{onRemoved:{addListener(){}},onUpdated:{addListener(){}},async get(){return {active:true,windowId:1};},async captureVisibleTab(){captures++;}},storage:{session:{async get(){return {'tab:2':enabled};},async remove(){}}}},fetch:async()=>{fetches++;}};
- vm.runInNewContext(await fs.readFile('extension/background.js','utf8'),ctx);
+ ctx.classifyOnDevice=async()=>{throw Error('Inference should not run');};
+ vm.runInNewContext((await fs.readFile('src/extension-background.mjs','utf8')).replace(/^import[^\n]+\n/,''),ctx);
  const send=m=>new Promise(resolve=>listener(m,{id:'unit',tab:{id:2}},resolve));
  let r=await send({type:'FRANKLY_CLASSIFY',image:'data:image/jpeg;base64,/9j/AAAA'});assert.match(r.error,/Enable/);
  enabled=true;r=await send({type:'FRANKLY_CAPTURE_CLASSIFY',rect:{x:-1,y:0,width:100,height:100,viewportWidth:800,viewportHeight:600}});assert.match(r.error,/entire image/);assert.equal(fetches,0);assert.equal(captures,0);

@@ -1,15 +1,19 @@
 import fs from 'node:fs/promises';
 import path from 'node:path';
 import {build} from 'esbuild';
-const assets={};
-const types={'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css','.png':'image/png','.jpg':'image/jpeg','.webp':'image/webp','.zip':'application/zip'};
+import {zipSync} from 'fflate';
+const common={bundle:true,format:'esm',platform:'browser',target:'es2022',minify:true};
+await build({...common,entryPoints:['src/website.mjs'],outfile:'public/app.js'});
+await build({...common,entryPoints:['src/device-worker.mjs'],outfile:'public/device-worker.js'});
+await build({...common,entryPoints:['src/extension-background.mjs'],outfile:'extension/background.js'});
+await fs.cp('public/model','extension/model',{recursive:true});
+const packed={};
+async function zipWalk(dir,prefix=''){for(const e of await fs.readdir(dir,{withFileTypes:true})){const name=prefix+e.name;if(e.isDirectory())await zipWalk(path.join(dir,e.name),name+'/');else packed[name]=new Uint8Array(await fs.readFile(path.join(dir,e.name)));}}
+await zipWalk('extension');
+await fs.writeFile('public/frankly-hotdog-extension.zip',zipSync(packed,{level:6}));
+const assets={},types={'.html':'text/html; charset=utf-8','.js':'application/javascript','.css':'text/css','.png':'image/png','.jpg':'image/jpeg','.json':'application/json','.bin':'application/octet-stream','.zip':'application/zip'};
 async function walk(dir,prefix=''){for(const e of await fs.readdir(dir,{withFileTypes:true})){const name=prefix+'/'+e.name;if(e.isDirectory())await walk(path.join(dir,e.name),name);else assets[name]={type:types[path.extname(e.name)]||'application/octet-stream',data:(await fs.readFile(path.join(dir,e.name))).toString('base64')};}}
-await walk('public');
-await fs.writeFile('src/assets.generated.mjs',`export const assets=${JSON.stringify(assets)};\n`);
-await fs.mkdir('dist/server',{recursive:true});
-await build({entryPoints:['src/worker.mjs'],outfile:'dist/server/index.js',bundle:true,format:'esm',platform:'browser',target:'es2022',minify:true});
-await fs.mkdir('dist/.openai/drizzle/meta',{recursive:true});
-await fs.copyFile('.openai/hosting.json','dist/.openai/hosting.json');
-await fs.copyFile('migrations/0000_budget.sql','dist/.openai/drizzle/0000_budget.sql');
-await fs.writeFile('dist/.openai/drizzle/meta/_journal.json',JSON.stringify({version:'7',dialect:'sqlite',entries:[{idx:0,version:'6',when:1789260000000,tag:'0000_budget',breakpoints:true}]}));
-console.log('Built worker and embedded public assets.');
+await walk('public');await fs.writeFile('src/assets.generated.mjs',`export const assets=${JSON.stringify(assets)};\n`);
+await fs.mkdir('dist/server',{recursive:true});await build({...common,entryPoints:['src/worker.mjs'],outfile:'dist/server/index.js'});
+await fs.mkdir('dist/.openai',{recursive:true});await fs.copyFile('.openai/hosting.json','dist/.openai/hosting.json');
+console.log('Built on device website, extension, and static Worker. No API credential is used.');

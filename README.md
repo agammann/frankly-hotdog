@@ -1,16 +1,16 @@
 # Frankly Hotdog
 
-An entertainment image classifier with an opt in browser hover extension and an MCP plugin. Select an image to get **HOTDOG**, **NOT HOTDOG**, or **UNCERTAIN**.
+Two ways to ask a very small question: hotdog or not hotdog?
 
-Publisher and support: [agammann](https://github.com/agammann). Report reproducible problems in [Issues](https://github.com/agammann/frankly-hotdog/issues).
+The OpenAI plugin uses the host assistant's existing image capabilities for an image shared in ChatGPT or Codex. The companion website and Chrome or Edge extension run MobileNet on the visitor's device. The extension adds opt in hover detection on regular webpages.
 
-## Status
+Neither workflow calls a publisher funded API. No API key is required. Normal ChatGPT or Codex plan limits still apply to the chat workflow. Browser checks use the visitor's device and local model files.
 
-Public source preview. The hosted service, real browser extension installation, and OpenAI directory submission are pending. The bundled hosted URLs describe the intended deployment and should not be treated as a live service. See [release status](RELEASE_STATUS.md) for verification limits.
+Publisher and support: [agammann](https://github.com/agammann). [Report an issue](https://github.com/agammann/frankly-hotdog/issues).
 
-## Run locally
+## Run and build
 
-Use Node.js 24 and pnpm 11.19.0. From the repository directory:
+Use Node.js 24 and pnpm 11.19.0:
 
 ```sh
 pnpm install --frozen-lockfile
@@ -19,36 +19,32 @@ pnpm test
 pnpm dev
 ```
 
-For real inference, create `.env.local` in this directory and set `OPENAI_API_KEY` to your own project credential using a private editor. This file is ignored by Git. Alternatively set the environment variable in your shell or deployment secret manager. Do not put credentials in the extension, plugin manifest, issues, or source code. OpenAI API access with available billing credit is required for inference.
+Open http://127.0.0.1:4317. Enable hover and point at a sample, click it, or choose a local image. Escape pauses checks. Clear results removes page verdicts.
 
-Open http://127.0.0.1:4317. Select Enable hover, point at a sample, or upload an image. Click and keyboard activation are also available. The local MCP endpoint is http://127.0.0.1:4317/mcp. Without a configured key the interface loads and reports inference errors explicitly.
+The build downloads the TensorFlow MobileNet V1 0.25 ImageNet model from its official storage source and verifies every file against MODEL.lock.json. The weights total 1,902,176 bytes. They are bundled into the extension and served as static files by the website. There is no remote inference service or API fallback.
 
-`pnpm test:live` sends the two bundled sample images to the real API and checks their verdicts. This is separate from the deterministic test suite and may incur API charges.
+The original API endpoints return HTTP 410. Source contains no OpenAI API client. Earlier commits describe the superseded API prototype; they are not the current implementation.
 
-## Browser extension
+## Install the browser companion
 
-The `extension` directory contains a Chrome and Edge Manifest V3 extension. Load it unpacked through the browser's extension management page after configuring a working service endpoint. The default endpoint targets the intended hosted service, which is not deployed yet.
+After building, extract `public/frankly-hotdog-extension.zip`. Open Chrome or Edge Extensions, enable Developer mode, choose Load unpacked, and select the extracted directory containing manifest.json. Open a regular webpage, click the extension icon, and enable it for that tab. Navigation resets activation; Escape pauses it.
 
-For local development, replace the hosted origin in `extension/background.js` with `http://127.0.0.1:4317` and replace the manifest host permission with `http://127.0.0.1:4317/*`. Keep the local server running. Enable the extension separately on each tab. Escape pauses it and navigation resets activation.
+The extension bundles JavaScript and model weights and has no external host permissions. It handles visible top level HTML images. If direct canvas access is blocked, it locally crops an active tab capture to the hovered image. The full screenshot is never uploaded or returned to page scripts. CSS backgrounds, frames, video, browser settings pages, and offscreen images are outside this preview. Overlays can affect the crop.
 
-Only visible top level HTML images are supported. CSS backgrounds, videos, frames, and browser settings pages are outside this preview. If canvas access is blocked, the extension crops a temporary local active tab capture to the fully visible hovered image. The full capture is never uploaded. Page overlays can affect the resulting crop.
-
-## Service and deployment
-
-The Worker exposes `/api/classify`, `/mcp`, `/health`, policy pages, and the domain verification challenge path. It uses the OpenAI Responses API with `gpt-4.1-mini`, low detail image input, strict structured output, and response storage disabled.
-
-Production requires a private `OPENAI_API_KEY` secret and a D1 database binding named `DB`. Apply `migrations/0000_budget.sql` before enabling inference. `.openai/hosting.json` is a generic hosting template; configure your own project when deploying. `pnpm build` generates the bundled Worker and migration metadata in `dist`.
-
-The service defaults to 100 attempted classifications per UTC day, with a configurable maximum of 1,000. A D1 atomic counter enforces the shared daily budget. An additional in memory limit allows six attempts per source per minute per isolate. Invalid inputs are rejected before budget reservation; provider failures still consume a reservation. Production inference fails closed if durable budget storage is missing.
-
-This limited public entertainment endpoint has no authentication. It does not persist images or verdicts. Aggregate counts expire after 30 days on subsequent requests. Confirm hosting provider operational logging and update the privacy policy before a public deployment.
-
-The MCP tool declares `readOnlyHint: false` because inference reserves a usage counter, `destructiveHint: false`, and `openWorldHint: true` because user selected external images may be processed. The output schema includes uncertainty. Errors are never labeled NOT HOTDOG.
+The small image model works best with clear photographs. It can return UNCERTAIN, and its rankings are not calibrated probabilities of correctness. Drawings and unusual presentations may be unreliable. This is entertainment, not a food safety or allergy tool.
 
 ## OpenAI plugin
 
-The `.codex-plugin`, `.mcp.json`, and `skills` directories contain the plugin package. `chatgpt-app-submission.json` contains draft listing metadata and test cases. Update the deployment URLs and complete the publisher, domain, policy, and live tool checks before submission. The OpenAI plugin and browser extension are separate installation surfaces.
+Package `.codex-plugin`, `skills`, and `assets` as a ZIP. Submit using Skills only in the OpenAI plugin portal. The skill uses the host assistant to inspect a selected image. It has no MCP server or credentials. Installing it does not install the browser companion. Draft test cases and metadata are in chatgpt-app-submission.json.
+
+See RELEASE_STATUS.md for actual deployment and submission status. Public GitHub source does not imply OpenAI approval or a browser store listing.
+
+## Hosting and data
+
+The Worker serves only static application assets. It never reads or writes a database or requests inference. The hosting manifest contains the owning Sites project identifier in the deployment checkout and a generic template in the public repository. Configure your own project when deploying.
+
+Website and extension images stay on device. Chat images are handled by the host assistant under its normal policies. Hosting still processes ordinary file requests and network metadata. See public/privacy.html and public/terms.html.
 
 ## Rights and credits
 
-No open source license has been granted for the application source. Public visibility does not grant additional reuse rights. Third party packages and sample images retain their own licenses. Photo attribution and license links are in [credits](public/credits.html).
+Application source has no open source license grant. TensorFlow.js and MobileNet model files retain their Apache 2.0 terms. Bundled notices are included in the extension. Other dependencies retain their own licenses. Photo credits are in public/credits.html.

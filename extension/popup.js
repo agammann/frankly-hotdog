@@ -10,7 +10,7 @@ toggle.addEventListener('click',async()=>{
     if(enabled)await chrome.scripting.executeScript({target:{tabId:tab.id},files:['content.js']});
     await chrome.storage.session.set({[key]:enabled});
     await chrome.tabs.sendMessage(tab.id,{type:'FRANKLY_SET_ENABLED',enabled});
-    status.textContent=enabled?'Enabled for this tab. Hover on an image for a moment. Press Escape to pause.':'Paused. No new images will be sent.';
+    status.textContent=enabled?'Enabled for this tab. Hover on an image for a moment. Press Escape to pause.':'Paused. No new images will be checked.';
     await read();
   }catch(e){status.textContent=e.message||'This page does not allow extensions.';}finally{toggle.disabled=false;}
 });

@@ -1,4 +1,4 @@
-const API='https://frankly-hotdog.alx21.chatgpt.site/api/classify';
+import {classifyOnDevice} from './device-engine.mjs';
 const active=new Set();
 chrome.tabs.onRemoved.addListener(id=>chrome.storage.session.remove('tab:'+id));
 chrome.tabs.onUpdated.addListener((id,change)=>{if(change.status==='loading')chrome.storage.session.remove('tab:'+id);});
@@ -29,9 +29,8 @@ chrome.runtime.onMessage.addListener((message,sender,reply)=>{
         }finally{bitmap.close();}
       }
       if(typeof image!=='string'||image.length>2_000_000||!/^data:image\/jpeg;base64,/.test(image))throw Error('This image could not be prepared.');
-      const res=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({image}),signal:AbortSignal.timeout(30000)});const r=await res.json();if(!res.ok)throw Error(r.error||'The classifier is unavailable.');return r;
-    }
-    finally{active.delete(id);}
-  })().then(reply).catch(e=>reply({error:e.message||'The classifier is unavailable.'}));
+      reply(await classifyOnDevice(image));
+    }finally{active.delete(id);}
+  })().catch(e=>reply({error:e.message?.slice(0,160)||'The local model could not finish. Reload and try a clear image.'}));
   return true;
 });

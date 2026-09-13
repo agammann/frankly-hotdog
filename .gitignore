@@ -4,3 +4,10 @@ dist/
 work/
 *.log
 src/assets.generated.mjs
+.model-cache/
+public/model/
+public/device-worker.js
+public/app.js
+public/frankly-hotdog-extension.zip
+extension/model/
+extension/background.js
