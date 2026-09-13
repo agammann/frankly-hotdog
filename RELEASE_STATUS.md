@@ -30,3 +30,13 @@ Historical Git commits and retired platform records retain their original metada
 The website now has an original illustrated mascot, poster typography, a vivid snack counter palette, responsive verdict boards, and clearer installation links. Fonts and artwork are served locally. The chat plugin remains 0.2.2 and the browser extension remains 0.2.3.
 
 All 17 automated checks pass, including new website regressions for cancellation races, Escape while busy, upload validation, and local object URL cleanup. Real browser checks cover the two sample verdicts and local image selection. Desktop and phone layouts were visually inspected. The source and website are prepared for publication through the existing release process; deployment identifiers are recorded in the external publication report after completion.
+
+## Binary photo classifier release 0.3.1
+
+The website now returns HOTDOG or NOT HOTDOG for every completed classification. Loading, decoding, missing output, and invalid scores remain errors. The companion extension is 0.2.4 and shares this classifier. The separately published chat plugin remains 0.2.2 and retains its host assistant behavior.
+
+MobileNet V1 1.0 replaces the 0.25 model. Full precision weights total 17,015,456 bytes and source files are pinned in MODEL.lock.json. Model paths and the website worker URL are versioned to avoid mixing cached releases. The model runs locally and no publisher API is used.
+
+Eighteen automated checks passed. Actual browser inference passed five hotdog photo inputs and six nonhotdog inputs, including the image that previously returned UNCERTAIN. Two of the five positive inputs depict the same source photograph, so this is a small regression set rather than an independent accuracy benchmark. The illustrated site mascot remains a known false negative. A smaller quantized candidate was rejected after missing photos that the full precision model recognized.
+
+The original image was selected through the website file picker, correctly classified as NOT HOTDOG, and Escape paused further checks. Browser error logs were empty. Private user images and temporary third party test images are excluded from source and release artifacts. Actual installed extension behavior remains unverified; automated extension behavior tests use simulated browser APIs.

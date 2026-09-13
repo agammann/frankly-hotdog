@@ -4,7 +4,7 @@
 
 Two ways to ask a very small question: hotdog or not hotdog?
 
-The website is version 0.3.0, with a playful snack counter design, original mascot, locally served fonts, responsive image boards, and keyboard accessible controls. The browser companion remains version 0.2.3 and the published OpenAI chat plugin remains version 0.2.2.
+The website is version 0.3.1, with a playful snack counter design, original mascot, locally served fonts, responsive image boards, and keyboard accessible controls. The browser companion is version 0.2.4 and the published OpenAI chat plugin remains version 0.2.2.
 
 The OpenAI plugin uses the host assistant's existing image capabilities for an image shared in ChatGPT or Codex. The companion website and Chrome or Edge extension run MobileNet on the visitor's device. The extension adds opt in hover detection on regular webpages.
 
@@ -25,7 +25,7 @@ pnpm dev
 
 Open http://127.0.0.1:4317. Enable hover and point at a sample, click it, or choose a local image. Escape pauses checks. Clear results removes page verdicts.
 
-The build downloads the TensorFlow MobileNet V1 0.25 ImageNet model from its official storage source and verifies every file against MODEL.lock.json. The weights total 1,902,176 bytes. They are bundled into the extension and served as static files by the website. There is no remote inference service or API fallback.
+The build downloads the TensorFlow MobileNet V1 1.0 ImageNet model from its official storage source and verifies every file against MODEL.lock.json. The bundled weights total 17,015,456 bytes (about 17 MB). They are bundled into the extension and served as static files by the website. There is no remote inference service or API fallback.
 
 The original API endpoints return HTTP 410. Source contains no OpenAI API client. Earlier commits describe the superseded API prototype; they are not the current implementation.
 
@@ -35,7 +35,7 @@ After building, extract `public/not-hotdog-extension.zip`. Open Chrome or Edge E
 
 The extension bundles JavaScript and model weights and has no external host permissions. It handles visible top level HTML images. If direct canvas access is blocked, it locally crops an active tab capture to the hovered image. The full screenshot is never uploaded or returned to page scripts. CSS backgrounds, frames, video, browser settings pages, and offscreen images are outside this preview. Overlays can affect the crop.
 
-The small image model works best with clear photographs. It can return UNCERTAIN, and its rankings are not calibrated probabilities of correctness. Drawings and unusual presentations may be unreliable. This is entertainment, not a food safety or allergy tool.
+The image model works best with clear photographs. Completed checks return HOTDOG when the hotdog class has a strong lead and NOT HOTDOG otherwise. Loading and decoding failures remain errors rather than image verdicts. Model rankings are not calibrated probabilities of correctness. Drawings and unusual presentations may be unreliable. This is entertainment, not a food safety or allergy tool.
 
 ## OpenAI plugin
 

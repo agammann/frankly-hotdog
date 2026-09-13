@@ -23,7 +23,7 @@
     if(busy){show('One image at a time.',img);return;}busy=true;show('A MOMENT OF FRANKNESS…',img);
     try{const request=await prepare(img);if(!enabled||requestId!==serial)return;
       if(request.type==='NOT_HOTDOG_CAPTURE_CLASSIFY'){bubble.style.display='none';await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));if(!enabled||requestId!==serial)return;}
-      const r=await chrome.runtime.sendMessage(request);if(r?.error)throw Error(r.error);if(!r||!['HOTDOG','NOT HOTDOG','UNCERTAIN'].includes(r.verdict))throw Error('No verdict came back.');
+      const r=await chrome.runtime.sendMessage(request);if(r?.error)throw Error(r.error);if(!r||!['HOTDOG','NOT HOTDOG'].includes(r.verdict))throw Error('No verdict came back.');
       if(!img.isConnected||key!==(img.currentSrc||img.src))return;
       if(cache.size>=100)cache.delete(cache.keys().next().value);cache.set(key,r.verdict);if(enabled&&requestId===serial)show(r.verdict,img);
     }catch(e){if(enabled&&requestId===serial)show(e.message||'Try again.',img);}finally{busy=false;}
