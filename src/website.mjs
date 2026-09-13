@@ -1,6 +1,6 @@
 import {classifyImage,resetEngine} from './device-client.mjs';
 let enabled=false, busy=false, timer, generation=0;
-const cache=new Map(), pending=new Map();
+const cache=new Map();
 const status=document.querySelector('#status'), enable=document.querySelector('#enable');
 async function imageData(image){
   if(!image.complete)await image.decode();
@@ -11,27 +11,30 @@ async function imageData(image){
 async function run(card){
   if(!enabled){status.textContent='Enable hover first. Images stay on this device.';return;}
   const img=card.querySelector('img'),label=card.querySelector('.verdict'), key=img.src, current=generation;
-  if(cache.has(key)){const r=cache.get(key);label.textContent=r.verdict;card.dataset.verdict=r.verdict;return;}
+  if(cache.has(key)){const r=cache.get(key);label.textContent=r.verdict;card.dataset.verdict=r.verdict;status.textContent=r.message;return;}
   if(busy){status.textContent='One image at a time. Try this one when the current verdict is ready.';return;}
-  busy=true;label.textContent='A MOMENT OF FRANKNESS…';status.textContent='Checking on this device. First use loads the local model…';
-  const controller=new AbortController();pending.set(key,controller);
+  busy=true;card.setAttribute('aria-busy','true');label.textContent='A MOMENT OF FRANKNESS…';status.textContent='Checking on this device. First use loads the local model…';
   try{
     const image=await imageData(img);
+    if(current!==generation)return;
     const result=await classifyImage(image);
     if(current!==generation)return;cache.set(key,result);label.textContent=result.verdict;card.dataset.verdict=result.verdict;status.textContent=result.message;
   }catch(e){if(current===generation){label.textContent='TRY AGAIN';status.textContent=e.message||'This image could not be read.';}}
-  finally{busy=false;pending.delete(key);}
+  finally{if(current===generation){busy=false;card.removeAttribute('aria-busy');}}
 }
 function bind(card){card.addEventListener('mouseenter',()=>{if(enabled)timer=setTimeout(()=>run(card),650);});card.addEventListener('mouseleave',()=>clearTimeout(timer));card.addEventListener('click',()=>{clearTimeout(timer);run(card);});}
 document.querySelectorAll('.image-card').forEach(bind);
-enable.addEventListener('click',()=>{enabled=!enabled;enable.setAttribute('aria-pressed',String(enabled));enable.textContent=enabled?'Pause hover':'Enable hover';status.textContent=enabled?'Hover over an image, or click it.':'Hover paused.';if(!enabled){clearTimeout(timer);generation++;for(const c of pending.values())c.abort();resetEngine();document.querySelectorAll('.image-card').forEach(c=>{if(!c.dataset.verdict)c.querySelector('.verdict').textContent='HOVER TO FIND OUT';});}});
-document.querySelector('#clear').addEventListener('click',()=>{generation++;clearTimeout(timer);for(const c of pending.values())c.abort();resetEngine();cache.clear();document.querySelectorAll('.image-card').forEach(c=>{delete c.dataset.verdict;c.querySelector('.verdict').textContent='HOVER TO FIND OUT';});status.textContent='A clean slate.';});
+function cancel(){clearTimeout(timer);generation++;busy=false;resetEngine();document.querySelectorAll('.image-card').forEach(c=>{c.removeAttribute('aria-busy');if(!c.dataset.verdict)c.querySelector('.verdict').textContent='HOVER TO FIND OUT';});}
+enable.addEventListener('click',()=>{enabled=!enabled;enable.setAttribute('aria-pressed',String(enabled));enable.textContent=enabled?'Pause hover':'Enable hover';status.textContent=enabled?'Hover over an image, or click it.':'Hover paused.';if(!enabled)cancel();});
+document.querySelector('#clear').addEventListener('click',()=>{cancel();cache.clear();document.querySelectorAll('.image-card').forEach(c=>{delete c.dataset.verdict;c.querySelector('.verdict').textContent='HOVER TO FIND OUT';});status.textContent='A clean slate.';});
 document.querySelector('#upload').addEventListener('change',async e=>{
   const file=e.target.files[0];if(!file)return;
   if(!['image/png','image/jpeg','image/webp'].includes(file.type)||file.size>12_000_000){status.textContent='Choose a PNG, JPEG, or WebP image smaller than 12 MB.';e.target.value='';return;}
-  const old=document.querySelector('[data-upload]');if(old){URL.revokeObjectURL(old.querySelector('img').src);old.remove();}
+  cancel();
+  const old=document.querySelector('[data-upload]');if(old){cache.delete(old.querySelector('img').src);URL.revokeObjectURL(old.querySelector('img').src);old.remove();}
   const card=document.createElement('button');card.className='image-card';card.dataset.upload='true';card.setAttribute('aria-label','Classify your selected image');
-  const img=document.createElement('img');img.src=URL.createObjectURL(file);img.alt='Your selected image';const label=document.createElement('span');label.className='verdict';label.textContent='HOVER TO FIND OUT';card.append(img,label);document.querySelector('.gallery').append(card);bind(card);status.textContent='Image ready. Enable hover, then point or click to classify.';e.target.value='';
+  const title=document.createElement('span');title.className='card-title';title.textContent='03 / YOUR WILD CARD';
+  const img=document.createElement('img');img.src=URL.createObjectURL(file);img.alt='Your selected image';const label=document.createElement('span');label.className='verdict';label.textContent='HOVER TO FIND OUT';card.append(title,img,label);document.querySelector('.gallery').append(card);bind(card);status.textContent=enabled?'Your image is ready. Hover or click for a verdict.':'Your image is ready. Enable hover, then point or click.';card.scrollIntoView({block:'nearest'});e.target.value='';
 });
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&enabled)enable.click();});

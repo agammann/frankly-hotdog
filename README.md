@@ -4,7 +4,7 @@
 
 Two ways to ask a very small question: hotdog or not hotdog?
 
-The browser companion is version 0.2.3. The published OpenAI chat plugin remains version 0.2.2; this companion maintenance release does not change its instructions.
+The website is version 0.3.0, with a playful snack counter design, original mascot, locally served fonts, responsive image boards, and keyboard accessible controls. The browser companion remains version 0.2.3 and the published OpenAI chat plugin remains version 0.2.2.
 
 The OpenAI plugin uses the host assistant's existing image capabilities for an image shared in ChatGPT or Codex. The companion website and Chrome or Edge extension run MobileNet on the visitor's device. The extension adds opt in hover detection on regular webpages.
 
@@ -52,3 +52,4 @@ Website and extension images stay on device. Chat images are handled by the host
 ## Rights and credits
 
 Application source has no open source license grant. TensorFlow.js and MobileNet model files retain their Apache 2.0 terms. Bundled notices are included in the extension. Other dependencies retain their own licenses. Photo credits are in public/credits.html.
+

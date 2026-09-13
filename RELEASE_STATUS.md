@@ -24,3 +24,9 @@ Version 0.2.2 is approved and published in the OpenAI Plugins Directory with pac
 The browser extension is an unpacked preview. Its behavior tests use simulated Chrome APIs and a DOM; a real installed Chrome or Edge session has not been verified. Two sample images do not establish general accuracy. No browser store listing is claimed.
 
 Historical Git commits and retired platform records retain their original metadata. Current names, package identifiers, source files, URLs, directories, and downloads use not hotdog or not-hotdog.
+
+## Website design release 0.3.0
+
+The website now has an original illustrated mascot, poster typography, a vivid snack counter palette, responsive verdict boards, and clearer installation links. Fonts and artwork are served locally. The chat plugin remains 0.2.2 and the browser extension remains 0.2.3.
+
+All 17 automated checks pass, including new website regressions for cancellation races, Escape while busy, upload validation, and local object URL cleanup. Real browser checks cover the two sample verdicts and local image selection. Desktop and phone layouts were visually inspected. The source and website are prepared for publication through the existing release process; deployment identifiers are recorded in the external publication report after completion.
