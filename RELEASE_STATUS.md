@@ -15,4 +15,5 @@ The local browser result is real model inference. Extension behavior tests use s
 
 ## Pending
 
-The rebuilt website is awaiting final deployment and public access. OpenAI submission and review are pending. The companion extension is distributed as an unpacked preview; no browser store listing is claimed. The publisher has completed identity verification in the OpenAI portal.
+The rebuilt website was deployed successfully with an empty runtime environment and is currently restricted to the owner. Both hosted sample checks passed on device. Public access awaits the publisher's answer. The public source was published at commit 3627faca51967977e87a1f2f50ac9df4839eafd3, and its GitHub build and tests passed (run 34738290128). The OpenAI skills only draft is complete and its skill scan shows Passed. Final submission awaits acceptance of OpenAI's terms and publisher declarations, as well as public website access. No OpenAI directory approval is claimed. The companion extension is distributed as an unpacked preview; no browser store listing is claimed. The publisher has completed identity verification in the OpenAI portal.
+
