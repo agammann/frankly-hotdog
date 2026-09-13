@@ -14,9 +14,10 @@ Version 0.2.2 is approved and published in the OpenAI Plugins Directory with pac
 
 1. All current tracked source files and all release archives were checked for the previous product name, with zero matches.
 2. Public website, privacy, terms, extension instructions, health, and extension ZIP returned HTTP 200 without authentication. The downloaded ZIP matches the local release byte for byte.
-3. Nine automated tests pass. GitHub CI passed for application commit e89b45ae1093cec1389e3425e61df7e3373fc43a, run 34739155586. Later changes only update documentation.
+3. The 0.2.3 companion release fixes local data decoding under the extension's strict connection policy, acknowledges activation, rolls back failed activation, prevents duplicate pause writes, validates fully visible images, discards stale image results, and rejects captures after a tab change. Regression tests cover local decoding with fetch forbidden, capture cleanup, tab changes, and activation failure. Earlier GitHub CI run 34739155586 covered the preceding 0.2.2 application.
 4. Website and extension inference run on device. The host chat plugin uses existing assistant capabilities and normal host limits. No publisher API key is used or configured.
 5. Both sample photographs passed real local and hosted model checks. The model weights total 1,902,176 bytes and are verified against pinned hashes.
+6. The published chat plugin was installed and tested in ChatGPT: no image prompted an attachment request, the hotdog and banana photos returned the expected verdicts, and the companion instructions and URL were correct. The chat plugin remains version 0.2.2; the website and browser companion are version 0.2.3.
 
 ## Limits
 

@@ -4,6 +4,8 @@
 
 Two ways to ask a very small question: hotdog or not hotdog?
 
+The browser companion is version 0.2.3. The published OpenAI chat plugin remains version 0.2.2; this companion maintenance release does not change its instructions.
+
 The OpenAI plugin uses the host assistant's existing image capabilities for an image shared in ChatGPT or Codex. The companion website and Chrome or Edge extension run MobileNet on the visitor's device. The extension adds opt in hover detection on regular webpages.
 
 Neither workflow calls a publisher funded API. No API key is required. Normal ChatGPT or Codex plan limits still apply to the chat workflow. Browser checks use the visitor's device and local model files.
